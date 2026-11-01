@@ -1,0 +1,18 @@
+[submodule "lib/cmsis-core"]
+	path = lib/cmsis-core
+	url = https://github.com/STMicroelectronics/cmsis-core.git
+[submodule "lib/cmsis-device-h5"]
+	path = lib/cmsis-device-h5
+	url = https://github.com/STMicroelectronics/cmsis-device-h5.git
+[submodule "lib/stm32h5xx-hal-driver"]
+	path = lib/stm32h5xx-hal-driver
+	url = https://github.com/STMicroelectronics/stm32h5xx-hal-driver.git
+[submodule "lib/micro-ecc"]
+	path = lib/micro-ecc
+	url = https://github.com/kmackay/micro-ecc.git
+[submodule "lib/monocypher"]
+	path = lib/monocypher
+	url = https://github.com/LoupVaillant/Monocypher.git
+[submodule "lib/tinyusb"]
+	path = lib/tinyusb
+	url = https://github.com/hathach/tinyusb.git
