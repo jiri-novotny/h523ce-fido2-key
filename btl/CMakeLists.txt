@@ -1,0 +1,10 @@
+set(SOURCE
+   ${SOURCE}
+
+   ${CMAKE_CURRENT_SOURCE_DIR}/image.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/main.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/ui.c
+   ${CMAKE_CURRENT_SOURCE_DIR}/usb_dfu.c
+
+   PARENT_SCOPE
+)

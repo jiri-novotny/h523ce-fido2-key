@@ -1,0 +1,116 @@
+{
+    "version": "2.0.0",
+    "inputs": [
+        {
+            "id": "serial-number",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "STM32_Programmer_CLI -l stlink | grep 'ST-LINK SN' | cut -b 35-",
+                "description": "Select ST-Link serial number",
+                "useSingleResult": true,
+            }
+        },
+        {
+            "id": "elf",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "elf"
+        },
+        {
+            "id": "image",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "image"
+        }
+    ],
+    "tasks": [
+        {
+            "label": "Clean All",
+            "type": "shell",
+            "command": "rm -rf build/",
+            "problemMatcher": []
+        },
+        {
+            "label": "Clean",
+            "type": "shell",
+                "command": "rm -rf build/${command:cpptools.activeConfigName}",
+            "problemMatcher": []
+        },
+        {
+            "label": "Configure",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Clean"
+            ],
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-Bbuild/${command:cpptools.activeConfigName}",
+                "-GNinja",
+                "-DCMAKE_BUILD_TYPE=MinSizeRel",
+                "-DCMAKE_TOOLCHAIN_FILE=${env:STM32CLT_PATH}/gcc-arm-none-eabi.cmake",
+                "-D${command:cpptools.activeConfigName}=1",
+                "."
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "DbgConfigure",
+            "dependsOrder": "sequence",
+            "dependsOn": [
+                "Clean"
+            ],
+            "type": "shell",
+            "command": "cmake",
+            "args": [
+                "-Bbuild/${command:cpptools.activeConfigName}",
+                "-GNinja",
+                "-DCMAKE_BUILD_TYPE=Debug",
+                "-DCMAKE_TOOLCHAIN_FILE=${env:STM32CLT_PATH}/gcc-arm-none-eabi.cmake",
+                "-D${command:cpptools.activeConfigName}=1",
+                "."
+            ],
+            "problemMatcher": []
+        },
+        {
+            "label": "Build",
+            "type": "shell",
+            "command": "ninja -Cbuild/${command:cpptools.activeConfigName}",
+            "problemMatcher": [
+                "$gcc"
+            ],
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "label": "Deploy",
+            "detail": "SWD: flash the active configuration (app: signed slot image, btl: bootloader)",
+            "type": "shell",
+            "command": "STM32_Programmer_CLI -c port=SWD sn=${input:serial-number} mode=UR -w build/${command:cpptools.activeConfigName}/${input:image}.hex -v -rst",
+            "problemMatcher": []
+        },
+        {
+            "label": "Bootloader",
+            "detail": "USB: reset the running app into the bootloader (touch required)",
+            "type": "shell",
+            "command": "python3 tools/bootloader.py",
+            "problemMatcher": []
+        },
+        {
+            "label": "Update",
+            "detail": "USB: install the signed app through the bootloader DFU",
+            "type": "shell",
+            "command": "dfu-util -d cafe:8009 -D build/app/stm32h523-fido2-signed.bin",
+            "problemMatcher": []
+        },
+        {
+            "label": "Format",
+            "type": "shell",
+            "command": "clang-format-18 --verbose -i $(find * -type f -name '*.c' -o -name '*.h' -o -name '*.cpp' -o -name '*.hpp')",
+            "problemMatcher": []
+        }
+    ]
+}

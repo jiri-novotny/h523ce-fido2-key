@@ -1,0 +1,77 @@
+{
+    "version": "0.2.0",
+    "inputs": [
+        {
+            "id": "select-device",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "device"
+        },
+        {
+            "id": "select-svd",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "svd-file"
+        },
+        {
+            "id": "debug-core",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "core"
+        },
+        {
+            "id": "target",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "target"
+        },
+        {
+            "id": "elf",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "elf"
+        },
+        {
+            "id": "serial-number",
+            "type": "command",
+            "command": "shellCommand.execute",
+            "args": {
+                "command": "STM32_Programmer_CLI -l stlink | grep 'ST-LINK SN' | cut -b 35-",
+                "description": "Select ST-Link serial number",
+                "useSingleResult": true,
+            }
+        },
+        {
+            "id": "image",
+            "type": "command",
+            "command": "cpptools.activeConfigCustomVariable",
+            "args": "image"
+        }
+    ],
+    "configurations": [
+        {
+            "name": "OpenOCD",
+            "cwd": "${workspaceFolder}",
+            "type": "cortex-debug",
+            "executable": "${workspaceFolder}/build/${command:cpptools.activeConfigName}/${input:elf}.elf",
+            // the app only boots from the signed slot image, the elf is used for symbols
+            "loadFiles": ["${workspaceFolder}/build/${command:cpptools.activeConfigName}/${input:image}.hex"],
+            "request": "launch",
+            "servertype": "openocd",
+            "runToEntryPoint": "main",
+            "armToolchainPath": "${env:STM32CLT_PATH}/GNU-tools-for-STM32/bin/",
+            "showDevDebugOutput": "raw",
+            "rtos": "FreeRTOS",
+            "device": "${input:select-device}",
+            "svdFile": "${env:STM32CLT_PATH}/STMicroelectronics_CMSIS_SVD/${input:select-svd}.svd",
+            "configFiles": [
+                "interface/stlink-dap.cfg",
+                "target/${input:target}.cfg"
+            ],
+            "openOCDLaunchCommands": [
+                "adapter serial ${input:serial-number}"
+            ],
+            "preLaunchTask": "Build"
+        }
+    ]
+}

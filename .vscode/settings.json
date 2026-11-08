@@ -1,0 +1,61 @@
+{
+    "files.associations": {
+        "*.h": "c",
+        "*.hpp": "cpp",
+        ".clang-format-files": "plaintext",
+        ".clang-format-ignore": "ignore"
+    },
+    "search.exclude": {
+        "build/": true,
+        "lib/cmsis-core/Core": true,
+        "lib/cmsis-core/Core_A": true,
+        "lib/cmsis-core/DAP": true,
+        "lib/cmsis-core/Documentation": true,
+        "lib/cmsis-core/DSP": true,
+        "lib/cmsis-core/Include/cmsis_armcc.h": true,
+        "lib/cmsis-core/Include/cmsis_armclang*": true,
+        "lib/cmsis-core/Include/cmsis_iccarm.h": true,
+        "lib/cmsis-core/Include/core_cm0*": true,
+        "lib/cmsis-core/Include/core_cm1*": true,
+        "lib/cmsis-core/Include/core_cm2*": true,
+        "lib/cmsis-core/Include/core_cm3.h": true,
+        "lib/cmsis-core/Include/core_cm35*": true,
+        "lib/cmsis-core/Include/core_cm4*": true,
+        "lib/cmsis-core/Include/core_cm5*": true,
+        "lib/cmsis-core/Include/core_cm8*": true,
+        "lib/cmsis-core/Include/core_sc*": true,
+        "lib/cmsis-core/Include/core_star*": true,
+        "lib/cmsis-core/NN": true,
+        "lib/cmsis-device_h5/_htmresc": true,
+        "lib/cmsis-device-h5/Include/stm32h503xx.h": true,
+        "lib/cmsis-device-h5/Include/stm32h533xx.h": true,
+        "lib/cmsis-device-h5/Include/stm32h562xx.h": true,
+        "lib/cmsis-device-h5/Include/stm32h563xx.h": true,
+        "lib/cmsis-device-h5/Include/stm32h573xx.h": true,
+        "lib/cmsis-device-h5/Release_Notes.html": true,
+        "lib/cmsis-device-h5/Source/Templates/arm": true,
+        "lib/cmsis-device-h5/Source/Templates/gcc/startup_stm32h503xx.s": true,
+        "lib/cmsis-device-h5/Source/Templates/gcc/startup_stm32h533xx.s": true,
+        "lib/cmsis-device-h5/Source/Templates/gcc/startup_stm32h562xx.s": true,
+        "lib/cmsis-device-h5/Source/Templates/gcc/startup_stm32h563xx.s": true,
+        "lib/cmsis-device-h5/Source/Templates/gcc/startup_stm32h573xx.s": true,
+        "lib/cmsis-device-h5/Source/Templates/iar": true,
+        "lib/stm32h5xx-hal-driver/_htmresc": true,
+        "lib/stm32h5xx-hal-driver/Release_Notes.html": true
+    },
+    "files.insertFinalNewline": true,
+    "files.trimFinalNewlines": false,
+    "[markdown]": {
+        "files.trimTrailingWhitespace": false
+    },
+    "files.trimTrailingWhitespace": true,
+    "files.eol": "\n",
+    "files.readonlyInclude": {
+        "lib/cmsis-core/**": true,
+        "lib/cmsis-device-h5/**": true,
+        "lib/stm32h5xx-hal-driver/**": true
+    },
+    // VSCode
+    "cortex-debug.variableUseNaturalFormat": false,
+    "extensions.ignoreRecommendations": true
+}
